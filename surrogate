@@ -1,7 +1,20 @@
 #!/usr/bin/env python
+# vim: set expandtab:
 import sys
 
+def usage():
+    print 'Usage: %s <command> <action> [args]' % sys.argv[0]
+
 if __name__ == "__main__":
-    m = __import__ ("surrogate_cmd_"+sys.argv[1])
-    func = getattr(m, sys.argv[2])
-    func()
+    try:
+        m = __import__ ("surrogate_cmd_"+sys.argv[1])
+        func = getattr(m, sys.argv[2])
+        func()
+    except AttributeError:
+        print "Command '%s' has no action: %s" % (sys.argv[1], sys.argv[2])
+        usage()
+    except ImportError:
+        print "Invalid command: %s" % sys.argv[1]
+        usage()
+    except IndexError:
+        usage()

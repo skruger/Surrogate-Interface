@@ -16,9 +16,14 @@ def list():
     errcode, errmsg, headers = h.getreply()
     if errcode == 200:
         f = h.getfile()
-        print f.read()
+        data= f.read()
+        vip = json.loads(data)  # Convert json string to python array object
+        formatstr = "%-35s %-8s %s"  # reusable format string for header and data output lines
+        print formatstr % ("Address", "Status","Nodes")
+        print "==============================================================================="
+        for v in vip["items"]:
+            print formatstr % (v["address"], v["status"],v["nodes"])
     return
-
 
 
 ##ADD NEW VIP
