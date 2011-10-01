@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # vim: set expandtab:
 import sys
+import surrogate_conf
 
 def usage():
     print 'Usage: %s <command> <action> [args]' % sys.argv[0]
@@ -18,3 +19,6 @@ if __name__ == "__main__":
         usage()
     except IndexError:
         usage()
+
+
+

@@ -2,6 +2,7 @@ import urllib, httplib, base64
 from httplib import HTTP
 import sys
 import json
+import surrogate_conf
 
 #vip = sys.argv[2]
 #action = sys.argv[3]
@@ -9,9 +10,10 @@ import json
 
 #READ JSON
 def list():
-    h = HTTP('home.shaunkruger.com:8087')
+    h = HTTP(surrogate_conf.get('hostname'))
     h.putrequest('GET','/module/mod_cluster_admin/vip')
-    h.putheader('Authorization','Basic '+base64.standard_b64encode('skruger:testing'))
+    userpass = "%s:%s" % (surrogate_conf.get('username'),surrogate_conf.get('password'))
+    h.putheader('Authorization','Basic '+base64.standard_b64encode(userpass))
     h.endheaders()
     errcode, errmsg, headers = h.getreply()
     if errcode == 200:
@@ -23,6 +25,10 @@ def list():
         print "==============================================================================="
         for v in vip["items"]:
             print formatstr % (v["address"], v["status"],v["nodes"])
+    elif errcode == 401:
+        print "Authentication error."
+    else:
+        print "HTTP %s: %s" % (errcode,errmsg)
     return
 
 
