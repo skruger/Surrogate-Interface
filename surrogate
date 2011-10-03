@@ -9,7 +9,7 @@ def usage():
 if __name__ == "__main__":
     try:
         m = __import__ ("surrogate_cmd_"+sys.argv[1])
-        func = getattr(m, sys.argv[2])
+        func = getattr(m, "action_"+sys.argv[2])
         func()
     except AttributeError:
         print "Command '%s' has no action: %s" % (sys.argv[1], sys.argv[2])

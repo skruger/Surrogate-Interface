@@ -9,7 +9,7 @@ import surrogate_conf
 
 
 #READ JSON
-def list():
+def action_list():
     h = HTTP(surrogate_conf.get('hostname'))
     h.putrequest('GET','/module/mod_cluster_admin/vip')
     userpass = "%s:%s" % (surrogate_conf.get('username'),surrogate_conf.get('password'))
@@ -33,7 +33,7 @@ def list():
 
 
 ##ADD NEW VIP
-def create():
+def action_create():
     vip = sys.argv[3]
     h = HTTP('home.shaunkruger.com:8087')
     h.putrequest('POST','/module/mod_cluster_admin/vip/'+vip)
@@ -48,7 +48,7 @@ def create():
     return         
 
 ##Disables VIP
-def delete():
+def action_delete():
     vip = sys.argv[3]
     h = HTTP('home.shaunkruger.com:8087')
     h.putrequest('DELETE','/module/mod_cluster_admin/vip/'+vip)
@@ -61,7 +61,7 @@ def delete():
     return
 
 ##Modify VIP
-def modify():
+def action_modify():
     vip = sys.argv[3]
     action = sys.argv[4]
     h = httplib.HTTPConnection('home.shaunkruger.com:8087')
@@ -71,5 +71,5 @@ def modify():
     return
 
 ##nodes
-def nodes():
+def action_nodes():
     vip = sys.argv[3]
